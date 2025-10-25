@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-back
+  labels:
+    app: multitool-back
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: multitool-back
+  template:
+    metadata:
+      labels:
+        app: multitool-back
+    spec:
+      containers:
+      - name: network-multitool
+        image: wbitt/network-multitool
+        env:
+        - name: HTTP_PORT
+          value: "8080"
+        ports:
+        - containerPort: 8080
+          name: http-port
+        securityContext:
+          runAsUser: 0
+          capabilities:
+            add: ["NET_ADMIN"]

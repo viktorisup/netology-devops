@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-net
+  labels:
+    app: nginx_multitool
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx_multitool
+  template:
+    metadata:
+      labels:
+        app: nginx_multitool
+    spec:
+      containers:
+      - name: network-multitool
+        image: wbitt/network-multitool
+        env:
+        - name: HTTP_PORT
+          value: "8080"
+        ports:
+        - containerPort: 8080
+          name: http-port
+        securityContext:
+          runAsUser: 0
+          capabilities:
+            add: ["NET_ADMIN"]
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
