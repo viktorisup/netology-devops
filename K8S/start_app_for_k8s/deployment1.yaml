@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx_plus_1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx_plus_1
+  template:
+    metadata:
+      labels:
+        app: nginx_plus_1
+    spec:
+      containers:
+      - name: network-multitool
+        image: wbitt/network-multitool
+        env:
+        - name: HTTP_PORT
+          value: "1180"
+        - name: HTTPS_PORT
+          value: "11443"
+        ports:
+        - containerPort: 1180
+          name: http-port
+        - containerPort: 11443
+          name: https-port
+        resources:
+          requests:
+            cpu: "1m"
+            memory: "20Mi"
+          limits:
+            cpu: "10m"
+            memory: "20Mi"
+        securityContext:
+          runAsUser: 0
+          capabilities:
+            add: ["NET_ADMIN"]
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80

@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment2
+  labels:
+    app: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx_busybox
+  template:
+    metadata:
+      labels:
+        app: nginx_busybox
+    spec:
+      initContainers:
+      - name: init-myservice
+        image: busybox
+        command: ['sh', '-c', 'echo Init container is running; sleep 5']
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 5
