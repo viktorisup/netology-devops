@@ -1,0 +1,89 @@
+Name:             data-exchange-65bcbf5795-pl4zb
+Namespace:        network-k8s
+Priority:         0
+Service Account:  default
+Node:             linux22/192.168.62.15
+Start Time:       Sun, 26 Oct 2025 11:00:48 +0000
+Labels:           app=shared-dir-app
+                  pod-template-hash=65bcbf5795
+Annotations:      cni.projectcalico.org/containerID: 17319b6b821a5a5a1eff33168f191d35dde5664f1a774f3a6cf43c91b24928c2
+                  cni.projectcalico.org/podIP: 10.1.128.34/32
+                  cni.projectcalico.org/podIPs: 10.1.128.34/32
+Status:           Running
+IP:               10.1.128.34
+IPs:
+  IP:           10.1.128.34
+Controlled By:  ReplicaSet/data-exchange-65bcbf5795
+Containers:
+  busybox:
+    Container ID:  containerd://6401ea850885307bb7b4b3fa06bfc33ed48c9d76fd709c522aeafc4db0c5a606
+    Image:         busybox
+    Image ID:      docker.io/library/busybox@sha256:2f590fc602ce325cbff2ccfc39499014d039546dc400ef8bbf5c6ffb860632e7
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      /bin/sh
+      -c
+    Args:
+      while true; do echo $(date) >> /data/file.txt; sleep 60; done
+    State:          Running
+      Started:      Sun, 26 Oct 2025 11:00:49 +0000
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /data from shared-data (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-x424n (ro)
+  multitool:
+    Container ID:  containerd://997df70932a57c74cc66849f5e2c583cbac1282997db64e7ebc120007b64320c
+    Image:         wbitt/network-multitool
+    Image ID:      docker.io/wbitt/network-multitool@sha256:d1137e87af76ee15cd0b3d4c7e2fcd111ffbd510ccd0af076fc98dddfc50a735
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      /bin/sh
+      -c
+    Args:
+      tail -f /data/file.txt
+    State:          Running
+      Started:      Sun, 26 Oct 2025 11:00:50 +0000
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /data from shared-data (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-x424n (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:
+  shared-data:
+    Type:       EmptyDir (a temporary directory that shares a pod's lifetime)
+    Medium:     
+    SizeLimit:  <unset>
+  kube-api-access-x424n:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age    From               Message
+  ----    ------     ----   ----               -------
+  Normal  Scheduled  2m59s  default-scheduler  Successfully assigned network-k8s/data-exchange-65bcbf5795-pl4zb to linux22
+  Normal  Pulling    2m59s  kubelet            Pulling image "busybox"
+  Normal  Pulled     2m58s  kubelet            Successfully pulled image "busybox" in 1.021s (1.021s including waiting). Image size: 2223686 bytes.
+  Normal  Created    2m58s  kubelet            Created container: busybox
+  Normal  Started    2m58s  kubelet            Started container busybox
+  Normal  Pulling    2m58s  kubelet            Pulling image "wbitt/network-multitool"
+  Normal  Pulled     2m57s  kubelet            Successfully pulled image "wbitt/network-multitool" in 949ms (949ms including waiting). Image size: 25281012 bytes.
+  Normal  Created    2m57s  kubelet            Created container: multitool
+  Normal  Started    2m57s  kubelet            Started container multitool
