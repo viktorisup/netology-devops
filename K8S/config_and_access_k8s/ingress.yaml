@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-tls-ingress
+  namespace: network-k8s
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    ingressClassName: "nginx"
+spec:
+  tls:
+  - hosts:
+    - myapp.example.com
+    secretName: tls-secrets
+  rules:
+  - host: myapp.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: web-myapp-svc
+            port:
+              number: 80
