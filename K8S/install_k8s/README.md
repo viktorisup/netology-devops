@@ -2,6 +2,8 @@
 
 В сценарии 5 ВМ на Ubuntu 22 serve 2cpu/2gb
 
+Использовал версии 
+
 <pre>
 kubernetes v1.34.2
 </pre>
@@ -428,7 +430,7 @@ kubeadm join 192.168.62.200:7443 --token ptlcob.om81c0mrmi5265zd --discovery-tok
 ```
 **🚨 ВАЖНО!** 
 
-Если токен стух , то присоединить ноды к кластеру не получится. Надо генерировать новы токе. Ознакомится как это делать можно [тут](https://github.com/BigKAA/youtube/blob/master/kubeadm/another-control-nodes.md)
+Если токен стух , то присоединить ноды к кластеру не получится. Надо генерировать новый токен. Ознакомится как это делать можно [тут](https://github.com/BigKAA/youtube/blob/master/kubeadm/another-control-nodes.md)
 
 ### Результат работы
 
